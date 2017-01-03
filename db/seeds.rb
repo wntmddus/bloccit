@@ -27,6 +27,13 @@ require 'random_data'
      body: RandomData.random_paragraph
    )
  end
+ 5.times do
+   Advertisement.create!(
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph,
+    price: RandomData.random_price
+   )
+ end
 puts "#{Post.count}"
 Post.find_or_create_by(title: "here is title", body: "Here is body")
 puts "#{Post.count}"
