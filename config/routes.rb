@@ -5,6 +5,8 @@ Rails.application.routes.draw do
      resources :sponsered_posts, except: [:index]
   end
 
+  resources :users, only: [:new, :create]
+
   resources :posts
 
   resources :advertisements
