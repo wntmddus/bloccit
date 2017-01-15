@@ -1,6 +1,7 @@
 require 'rails_helper'
+require 'random_data'
 
-Rspec.describe QuestionsController, type: :controller do
+RSpec.describe QuestionsController, type: :controller do
   let(:my_question) do
     Question.create(
       id: 1,
@@ -17,7 +18,7 @@ Rspec.describe QuestionsController, type: :controller do
     end
     it "assigns my_question to @question" do
       get :index
-      expect(assigns(:question)).to eq([my_question])
+      expect(assigns(:questions)).to eq([my_question])
     end
   end
   describe "GET new" do
@@ -35,13 +36,13 @@ Rspec.describe QuestionsController, type: :controller do
  # #3
     it "instantiates @post" do
       get :new
-      expect(assigns(:post)).not_to be_nil
+      expect(assigns(:question)).not_to be_nil
     end
   end
   describe "POST create" do
 # #4
     it "increases the number of Question by 1" do
-      expect{post :create, {post: {title: "Title", body: "body", resolved: false}}}.to change(Question,:count).by(1)
+      expect{post :create, {question: {title: "Title", body: "body", resolved: false}}}.to change(Question,:count).by(1)
     end
 
 # #5

@@ -7,8 +7,8 @@ RSpec.describe Advertisement, type: :model do
     it "should respond to title" do
       expect(advertisement).to respond_to(:title)
     end
-    it "should respond to copy" do
-      expect(advertisement).to respond_to(:copy)
+    it "should respond to body" do
+      expect(advertisement).to respond_to(:body)
     end
     it "should respond to price" do
       expect(advertisement).to respond_to(:price)
