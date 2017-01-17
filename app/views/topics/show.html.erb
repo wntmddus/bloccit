@@ -7,18 +7,7 @@
    <div class="col-md-8">
      <p class="lead"><%= @topic.description %></p>
      <% @topic.posts.each do |post| %>
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
-             <h1>
-               <%= post.title %> <br>
-               <small>
-                 submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %>
-               </small>
-             </h1>
-           </h4>
-         </div>
-       </div>
+       <%= render partial: 'posts/post', locals: { posts: post } %> 
      <% end %>
    </div>
    <% if current_user %>
