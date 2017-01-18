@@ -1,14 +1,15 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
-  before_action :authorize_moderator, except: [:show, :new, :create, :delete]
-  before_action :authorize_user, except: [:show, :new, :create]
+  #before_action :authorize_mod_or_admin_or_user, only: [:show, :new, :create, :update]
+  #before_action :authorize_admin_or_user, only: [:show, :new, :create, :update, :destroy]
   def show
     @post = Post.find(params[:id])
   end
 
   def new
     @topic = Topic.find(params[:topic_id])
-    @post = Post.new
+    post = @topic.posts.new(post_params)
+
   end
 
   def create
@@ -46,8 +47,6 @@ class PostsController < ApplicationController
    end
    def destroy
      @post = Post.find(params[:id])
-
- # #8
      if @post.destroy
        flash[:notice] = "\"#{@post.title}\" was deleted successfully."
        redirect_to @post.topic
@@ -61,19 +60,17 @@ class PostsController < ApplicationController
    def post_params
      params.require(:post).permit(:title, :body)
    end
-   def authorize_user
-     post = Post.find(params[:id])
- # #11
-     unless current_user == post.user || current_user.admin?
-       flash[:alert] = "You must be an admin to do that."
-       redirect_to [post.topic, post]
+   def authorize_admin_or_user
+     @post = Post.find(params[:id])
+     unless current_user == @post.user || current_user.admin?
+       flash[:alert] = "You must be an admin or owner to do that."
+       redirect_to [@post.topic, @post]
      end
    end
-   def authroize_moderator
+   def authorize_mod_or_admin_or_user
      post = Post.find(params[:id])
- # #11
-     unless current_user.moderator?
-       flash[:alert] = "You must be an moderator to do that."
+     unless current_user.moderator? || current_user.admin? || current_user == post.user
+       flash[:alert] = "You must be an moderator, admin, or owner to do that."
        redirect_to [post.topic, post]
      end
    end
