@@ -1,23 +1,20 @@
 Rails.application.routes.draw do
   resources :topics do
  # #34
-     resources :posts, except: [:index]
+     resources :posts, except: [:index] do
+       resources :comments, only: [:create, :destroy]
+       resources :favorites, only: [:create, :destroy]
+     end
      resources :sponsored_posts, except: [:index]
-  end
-  resources :posts, only: [] do
- # #5
-     resources :comments, only: [:create, :destroy]
-     resources :favorites, only: [:create, :destroy]
   end
 
   post '/up-vote/:post_id' => 'votes#up_vote', as: :up_vote
   post '/down-vote/:post_id' => 'votes#down_vote', as: :down_vote
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
 
   resources :sessions, only: [:new, :create, :destroy]
 
-  resources :posts
 
   resources :advertisements
 
