@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :posts, only: [] do
  # #5
      resources :comments, only: [:create, :destroy]
+     resources :favorites, only: [:create, :destroy]
   end
 
   post '/up-vote/:post_id' => 'votes#up_vote', as: :up_vote
