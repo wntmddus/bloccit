@@ -6,7 +6,7 @@ RSpec.describe FavoritesController, type: :controller do
   let(:my_topic) { create(:topic) }
   let(:my_user) { create(:user) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
-  
+
    context 'guest user' do
      describe 'POST create' do
        it 'redirects the user to the sign in view' do
@@ -50,12 +50,8 @@ RSpec.describe FavoritesController, type: :controller do
 
        it 'destroys the favorite for the current user and post' do
          favorite = my_user.favorites.where(post: my_post).create
- # #16
          expect( my_user.favorites.find_by_post_id(my_post.id) ).not_to be_nil
-
          delete :destroy, { post_id: my_post.id, id: favorite.id }
-
- # #17
          expect( my_user.favorites.find_by_post_id(my_post.id) ).to be_nil
        end
      end

@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'random_data'
 
 RSpec.describe User, type: :model do
-  let(:user) { create(:user) }
+   let(:user) { create(:user) }
    it { is_expected.to have_many(:posts) }
    it { is_expected.to have_many(:comments) }
    it { is_expected.to have_many(:votes) }
